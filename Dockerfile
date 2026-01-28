@@ -5,7 +5,8 @@ WORKDIR /home/gradle/src
 RUN gradle build --no-daemon -x test
 
 # Stage 2: Run the application
-FROM openjdk:17-jdk-slim
+# Using eclipse-temurin as the maintained alternative to the deprecated openjdk image
+FROM eclipse-temurin:17-jre-jammy
 EXPOSE 8085
 COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
